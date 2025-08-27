@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaito Yaps API Proxy</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .badge {
+            background: #27ae60;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .endpoint {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+        .method {
+            background: #007bff;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            margin-right: 10px;
+        }
+        .test-link {
+            background: #28a745;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            display: inline-block;
+            margin: 10px 10px 10px 0;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .test-link:hover {
+            background: #218838;
+        }
+        .params {
+            margin-top: 15px;
+        }
+        .param {
+            margin: 5px 0;
+            padding: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+        }
+        .example {
+            background: #f1f3f4;
+            border-left: 4px solid #4285f4;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Kaito Yaps API Proxy<span class="badge">LIVE</span></h1>
+        
+        <p>Welcome to the CORS proxy for Kaito Yaps API! This service allows you to access tokenized attention data from Kaito without CORS restrictions.</p>
+        
+        <div class="endpoint">
+            <h3><span class="method">GET</span>/api/kaito-yaps-proxy</h3>
+            
+            <div class="params">
+                <h4>Query Parameters:</h4>
+                <div class="param">
+                    <strong>username</strong> (optional) - Twitter/X username (e.g., "VitalikButerin")
+                </div>
+                <div class="param">
+                    <strong>user_id</strong> (optional) - Numeric user ID
+                </div>
+                <p><em>At least one parameter is required.</em></p>
+            </div>
+        </div>
+        
+        <div class="example">
+            <h4>📊 Response Example:</h4>
+            <pre>{
+  "yaps_all": 1234,
+  "yaps_l7d": 56,
+  "additional_metrics": "..."
+}</pre>
+        </div>
+        
+        <h3>🧪 Test the API:</h3>
+        <a href="/api/kaito-yaps-proxy?username=VitalikButerin" class="test-link" target="_blank">
+            Test with VitalikButerin
+        </a>
+        <a href="/api/kaito-yaps-proxy?username=elonmusk" class="test-link" target="_blank">
+            Test with elonmusk
+        </a>
+        
+        <div class="example">
+            <h4>💻 Usage in JavaScript:</h4>
+            <pre>// Fetch yaps data
+const response = await fetch('/api/kaito-yaps-proxy?username=VitalikButerin');
+const data = await response.json();
+
+// Use in your SocialFi/Cluster Protocol workflows
+console.log(`Total yaps: ${data.yaps_all}`);
+console.log(`Recent yaps: ${data.yaps_l7d}`);</pre>
+        </div>
+        
+        <div class="example">
+            <h4>🔗 Direct API Access:</h4>
+            <p>You can also access the API directly from any application:</p>
+            <pre>curl "https://kaito-proxy-ak3g.vercel.app/api/kaito-yaps-proxy?username=VitalikButerin"</pre>
+        </div>
+        
+        <div class="footer">
+            <p>🚀 Deployed on Vercel | Built for Cursor & Versal workflows</p>
+            <p>Repository: <a href="https://github.com/Sigmabrogz/kaito-proxy" target="_blank">github.com/Sigmabrogz/kaito-proxy</a></p>
+        </div>
+    </div>
+</body>
+</html> 

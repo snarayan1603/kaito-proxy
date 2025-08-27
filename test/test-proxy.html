@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaito Yaps Proxy Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007cba;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #005a8b;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .loading {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Kaito Yaps Proxy Test</h1>
+        <p>Test the CORS proxy for Kaito Yaps API. Enter a username or user_id to fetch tokenized attention data.</p>
+        
+        <form id="proxyForm">
+            <div class="form-group">
+                <label for="username">Username (e.g., VitalikButerin):</label>
+                <input type="text" id="username" placeholder="Enter Twitter/X username">
+            </div>
+            
+            <div class="form-group">
+                <label for="user_id">User ID (optional):</label>
+                <input type="text" id="user_id" placeholder="Enter user ID">
+            </div>
+            
+            <div class="form-group">
+                <label for="proxyUrl">Proxy URL:</label>
+                <input type="text" id="proxyUrl" value="http://localhost:3000/api/kaito-yaps-proxy" placeholder="Enter proxy URL">
+            </div>
+            
+            <button type="submit" id="testBtn">Test Proxy</button>
+        </form>
+        
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        document.getElementById('proxyForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const user_id = document.getElementById('user_id').value.trim();
+            const proxyUrl = document.getElementById('proxyUrl').value.trim();
+            const resultDiv = document.getElementById('result');
+            const testBtn = document.getElementById('testBtn');
+            
+            // Validate input
+            if (!username && !user_id) {
+                showResult('error', 'Please enter either a username or user_id');
+                return;
+            }
+            
+            if (!proxyUrl) {
+                showResult('error', 'Please enter a proxy URL');
+                return;
+            }
+            
+            // Show loading
+            testBtn.disabled = true;
+            testBtn.textContent = 'Testing...';
+            showResult('loading', 'Fetching data from Kaito API...');
+            
+            try {
+                // Build query parameters
+                const params = new URLSearchParams();
+                if (username) params.append('username', username);
+                if (user_id) params.append('user_id', user_id);
+                
+                const url = `${proxyUrl}?${params.toString()}`;
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('success', JSON.stringify(data, null, 2));
+                } else {
+                    showResult('error', `Error ${response.status}: ${data.error || 'Unknown error'}`);
+                }
+                
+            } catch (error) {
+                showResult('error', `Network error: ${error.message}`);
+            } finally {
+                testBtn.disabled = false;
+                testBtn.textContent = 'Test Proxy';
+            }
+        });
+        
+        function showResult(type, message) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = `result ${type}`;
+            resultDiv.textContent = message;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html> 
